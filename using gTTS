@@ -1,0 +1,203 @@
+PyCharm Community edition supports Jupyter notebooks in read-only mode, to get full support for local notebooks download and try PyCharm Professional now!
+
+
+Try DataSpell — a dedicated IDE for data science,
+with full support for local and remote notebooks
+
+
+Try Datalore — an online environment
+for Jupyter notebooks in the browser
+
+Also read more about JetBrains Data Solutions on our website
+
+[8]
+import nltk
+[15]
+nltk.download("punkt")
+[nltk_data] Downloading package punkt to
+[nltk_data]     C:\Users\dell\AppData\Roaming\nltk_data...
+[nltk_data]   Unzipping tokenizers\punkt.zip.
+
+True
+#Sentence tokenization of paragraph
+[16]
+from nltk.tokenize import sent_tokenize
+[22]
+para="Hello. Its very nice to see you again. This morning in a beautiful mood."
+[23]
+sent_tokenize(para)
+['Hello.',
+ 'Its very nice to see you again.',
+ 'This morning in a beautiful mood.']
+#word_tokenization of paragraph
+[26]
+from nltk.tokenize import word_tokenize
+[27]
+word_tokenize(para)
+['Hello',
+ '.',
+ 'Its',
+ 'very',
+ 'nice',
+ 'to',
+ 'see',
+ 'you',
+ 'again',
+ '.',
+ 'This',
+ 'morning',
+ 'in',
+ 'a',
+ 'beautiful',
+ 'mood',
+ '.']
+#Determine length of token_words
+[28]
+len(word_tokenize(para))
+17
+#bigrams/digrams/ngrams=> for autocompletion
+
+[39]
+sample_para=(word_tokenize(para))
+[40]
+list(nltk.bigrams(sample_para))
+[('Hello', '.'),
+ ('.', 'Its'),
+ ('Its', 'very'),
+ ('very', 'nice'),
+ ('nice', 'to'),
+ ('to', 'see'),
+ ('see', 'you'),
+ ('you', 'again'),
+ ('again', '.'),
+ ('.', 'This'),
+ ('This', 'morning'),
+ ('morning', 'in'),
+ ('in', 'a'),
+ ('a', 'beautiful'),
+ ('beautiful', 'mood'),
+ ('mood', '.')]
+[43]
+list(nltk.trigrams(sample_para))
+[('Hello', '.', 'Its'),
+ ('.', 'Its', 'very'),
+ ('Its', 'very', 'nice'),
+ ('very', 'nice', 'to'),
+ ('nice', 'to', 'see'),
+ ('to', 'see', 'you'),
+ ('see', 'you', 'again'),
+ ('you', 'again', '.'),
+ ('again', '.', 'This'),
+ ('.', 'This', 'morning'),
+ ('This', 'morning', 'in'),
+ ('morning', 'in', 'a'),
+ ('in', 'a', 'beautiful'),
+ ('a', 'beautiful', 'mood'),
+ ('beautiful', 'mood', '.')]
+[45]
+list(nltk.ngrams(sample_para,8))
+[('Hello', '.', 'Its', 'very', 'nice', 'to', 'see', 'you'),
+ ('.', 'Its', 'very', 'nice', 'to', 'see', 'you', 'again'),
+ ('Its', 'very', 'nice', 'to', 'see', 'you', 'again', '.'),
+ ('very', 'nice', 'to', 'see', 'you', 'again', '.', 'This'),
+ ('nice', 'to', 'see', 'you', 'again', '.', 'This', 'morning'),
+ ('to', 'see', 'you', 'again', '.', 'This', 'morning', 'in'),
+ ('see', 'you', 'again', '.', 'This', 'morning', 'in', 'a'),
+ ('you', 'again', '.', 'This', 'morning', 'in', 'a', 'beautiful'),
+ ('again', '.', 'This', 'morning', 'in', 'a', 'beautiful', 'mood'),
+ ('.', 'This', 'morning', 'in', 'a', 'beautiful', 'mood', '.')]
+#Stemming=> like in english speaking, we have a root word and by adding suffix and prefix to this root word we can create a new word
+
+[46]
+from nltk.stem import PorterStemmer
+#creating instance my_stem
+my_stem=PorterStemmer()
+[49]
+my_stem.stem("eating")
+'eat'
+[50]
+my_stem.stem("Running")
+'run'
+#pos=>tagging->tag each word_token to a particular part of speech
+
+[54]
+nltk.download('averaged_perceptron_tagger')
+[nltk_data] Downloading package averaged_perceptron_tagger to
+[nltk_data]     C:\Users\dell\AppData\Roaming\nltk_data...
+[nltk_data]   Unzipping taggers\averaged_perceptron_tagger.zip.
+
+True
+[60]
+sample_2=nltk.pos_tag(word_tokenize(para))
+[61]
+sample_2
+[('Hello', 'NNP'),
+ ('.', '.'),
+ ('Its', 'PRP$'),
+ ('very', 'RB'),
+ ('nice', 'JJ'),
+ ('to', 'TO'),
+ ('see', 'VB'),
+ ('you', 'PRP'),
+ ('again', 'RB'),
+ ('.', '.'),
+ ('This', 'DT'),
+ ('morning', 'NN'),
+ ('in', 'IN'),
+ ('a', 'DT'),
+ ('beautiful', 'JJ'),
+ ('mood', 'NN'),
+ ('.', '.')]
+#Named entity recognition=>like a place as geographical
+
+[59]
+from nltk import ne_chunk
+[63]
+nltk.download('maxent_ne_chunker')
+[nltk_data] Downloading package maxent_ne_chunker to
+[nltk_data]     C:\Users\dell\AppData\Roaming\nltk_data...
+[nltk_data]   Unzipping chunkers\maxent_ne_chunker.zip.
+
+True
+[66]
+nltk.download('words')
+[nltk_data] Downloading package words to
+[nltk_data]     C:\Users\dell\AppData\Roaming\nltk_data...
+[nltk_data]   Unzipping corpora\words.zip.
+
+True
+[67]
+print(ne_chunk(sample_2))
+(S
+  (GPE Hello/NNP)
+  ./.
+  Its/PRP$
+  very/RB
+  nice/JJ
+  to/TO
+  see/VB
+  you/PRP
+  again/RB
+  ./.
+  This/DT
+  morning/NN
+  in/IN
+  a/DT
+  beautiful/JJ
+  mood/NN
+  ./.)
+
+# text to speech conversion using google_text_to_speech library
+[72]
+from gtts import gTTS
+[73]
+from IPython.display import Audio
+[74]
+TTS=gTTS(para)
+[75]
+TTS.save("1.wav")
+[76]
+sound_file='1.wav'
+[78]
+Audio(sound_file,autoplay=True)
+
